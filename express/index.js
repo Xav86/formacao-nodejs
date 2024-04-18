@@ -20,7 +20,12 @@ app.get("/blog/:artigo?",function(req,res){
 });
 
 app.get("/canal/youtube", function(req,res){
-    res.send("<h1>Bem vindo ao meu canal!</h1> <br> &#128511;");
+    var video = req.query["video"];
+    if (video){
+        res.send(video);
+    }else{
+        res.send("nenhum canal fornecido");
+    }
 });
 
 app.get("/ola/:nome/:empresa",function(req,res){
@@ -38,4 +43,4 @@ app.listen(8080,function(erro){
     } else {
         console.log("Servidor iniciado com sucesso!");
     }
-})
+});
