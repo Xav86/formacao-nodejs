@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./database/database");
 const Pergunta = require("./database/Pergunta");
+const { where } = require("sequelize");
 
 //Database - chamando a conexão
 
@@ -30,7 +31,14 @@ app.use(bodyParser.json());
 
 //rotas
 app.get("/",(req,res) => {
-    res.render("index");//pega automatico o arquivo index na pasta Views, não precisando botar o vaminho "view/index". nem a extrensão .ejs precisa.
+    Pergunta.findAll({ raw: true, order:[
+        ['id','DESC'] //ASC = Crescence || DESC = Decrescente
+    ]}).then(perguntas => {
+        res.render("index",{
+            perguntas: perguntas
+        });
+    }); // Pergunta.findAll = SELECT * FROM perguntas
+    //pega automatico o arquivo index na pasta Views, não precisando botar o vaminho "view/index". nem a extrensão .ejs precisa.
 });
 
 app.get("/perguntar",(req,res) => {
@@ -46,6 +54,21 @@ app.post("/salvarpergunta",(req,res) =>{
         descricao: descricao,
     }).then(() => {
         res.redirect("/");
+    });
+});
+
+app.get("/pergunta/:id",(req,res) =>{
+    var id = req.params.id;
+    Pergunta.findOne({
+        where: {id: id}
+    }).then(pergunta =>{
+        if (pergunta != undefined){ //tem uma pergunta
+            res.render("pergunta",{
+                pergunta: pergunta
+            });
+        }else{ //não tem uma pergunta
+            res.redirect("/");
+        }
     });
 });
 
