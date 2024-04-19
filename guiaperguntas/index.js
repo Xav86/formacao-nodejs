@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const connection = require("./database/database");
 const Pergunta = require("./database/Pergunta");
 const { where } = require("sequelize");
+const Resposta = require("./database/Resposta");
 
 //Database - chamando a conexão
 
@@ -63,13 +64,31 @@ app.get("/pergunta/:id",(req,res) =>{
         where: {id: id}
     }).then(pergunta =>{
         if (pergunta != undefined){ //tem uma pergunta
-            res.render("pergunta",{
-                pergunta: pergunta
+
+            Resposta.findAll({
+                where: {perguntaId: pergunta.id}
+            }).then(respostas => {
+                res.render("pergunta",{
+                    pergunta: pergunta,
+                    respostas: respostas
+                });
             });
         }else{ //não tem uma pergunta
             res.redirect("/");
         }
     });
+});
+
+app.post("/responder",(req,res) =>{
+    var corpo = req.body.corpo;
+    var perguntaId = req.body.pergunta;
+    
+    Resposta.create({
+        corpo: corpo,
+        perguntaId: perguntaId
+    }).then(() => {
+        res.redirect("/pergunta/"+perguntaId);
+    })
 });
 
 app.listen(8080,() => {
