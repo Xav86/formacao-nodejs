@@ -9,9 +9,13 @@ app.use('/css', express.static('./node_modules/bootstrap/dist/css'));
 app.use('/js', express.static('./node_modules/bootstrap/dist/js'));
 
 
-app.get("/:nome/:lang",(req,res) => {
+app.get("/",(req,res) => {
     res.render("index");//pega automatico o arquivo index na pasta Views, não precisando botar o vaminho "view/index". nem a extrensão .ejs precisa.
 
+});
+
+app.get("/perguntar",(req,res) => {
+    res.render("perguntar");
 });
 
 app.listen(8080,() => {
