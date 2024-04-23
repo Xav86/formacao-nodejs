@@ -5,6 +5,7 @@
     <div class="container">
         <br>
         <h2>Categorias</h2>
+        <a class="btn btn-success" href="/admin/categories/new">Criar nova Categoria</a>
         <hr>
         <table class="table table-bordered">
             <thead>
@@ -22,6 +23,17 @@
                         <th><%= category.id %></th>
                         <th><%= category.title %></th>
                         <th><%= category.slug %></th>
+                        <th>
+                                
+                            <a href="/admin/categories/edit/<%= category.id %>" class="btn btn-warning">Editar</a>
+
+                            <form action="/categories/delete" method="POST" style="display: inline;" onsubmit="confirmarDelecao(event, this)">
+                                <input type="hidden" name="id" value="<%= category.id %>">
+                                <button class="btn btn-danger">Deletar</button>
+
+                            </form>
+
+                        </th>
                     </tr>
 
                 <% }) %>
@@ -32,3 +44,13 @@
 
 </body>
 <%- include ('../../partials/footer.ejs') %>
+
+<script>
+    function confirmarDelecao(event, form){
+        event.preventDefault();
+        var decision = confirm("Deseja excluir esta categoria?");
+        if (decision){
+           form.submit();
+        }
+    }
+</script>
