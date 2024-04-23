@@ -4,6 +4,7 @@ const Category = require("../categories/Category");
 const Article = require("./Article");
 const slugify = require("slugify");
 const connection = require("../database/database");
+const { where } = require("sequelize");
 
 router.get("/admin/articles", (req,res) => {
     Article.findAll({
@@ -49,5 +50,19 @@ router.post("/articles/delete", (req, res) => {
         res.redirect("/admin/articles");
     }
 });
+
+router.post("/articles/update", (req,res) => {
+    var id = req.body.id;
+    var title = req.body.title;
+    var body = req.body.body;
+
+    Article.update({title: title, slug: slugify(title), body: body},{
+        where: {
+            id: id
+        }
+    }).then(() => {
+        res.redirect("/admin/articles");
+    });
+})  
 
 module.exports = router;
