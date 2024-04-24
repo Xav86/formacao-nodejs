@@ -85,6 +85,36 @@ router.post("/articles/update", (req,res) => {
     }).then(() => {
         res.redirect("/admin/articles");
     });
-})  
+});
+
+router.get("/articles/page/:num", (req, res) => {
+    var page = req.params.num;
+    var offset = 0;
+
+    if (isNaN(page) || page == 1){
+        offset = 0;
+    } else {
+        offset = parseInt(page) * 3;
+    }
+
+    Article.findAndCountAll({
+        limit: 3,
+        offset: offset
+    }).then(articles => {
+        var next;
+        if (offset + 3 >= articles.count){
+            next = false;
+        } else {
+            next = true;
+        }
+
+        var result = {
+            result: next,
+            articles: articles
+        }
+
+        res.json(result);
+    })
+});
 
 module.exports = router;
