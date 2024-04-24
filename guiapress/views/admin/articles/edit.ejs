@@ -4,24 +4,25 @@
     <br>
     <div class="card">
         <div class="card-header">
-            <h2>Novo Artigo</h2>
+            <h2>Editar Artigo</h2>
         </div>
         <div class="card-body">
-            <form method="POST" action="/articles/save">
-                <input class="form-control"  type="text" name="title" id="title" placeholder="Digite um título para o artigo">
+            <form method="POST" action="/articles/update">
+                <input class="form-control"  type="text" name="title" id="title" placeholder="Digite um título para o artigo" value="<%= article.title %>">
                 <br>
-                <textarea class="form-control" name="body" id="article" cols="30" rows="10" placeholder="Descreva seu artigo"></textarea>
+                <textarea class="form-control" name="body" id="article" cols="30" rows="10" placeholder="Descreva seu artigo"><%- article.body %></textarea>
 
                 <!-- O texto tem que ter até 256 caracteres, pois esta sendo salva em uma string, pois com o banco de dados do Oracle, não consegui colocar como TEXT, ja que não tem, o que me fez ter que colocar como string pq o resto não estava dando -->
 
                 <br>
                 <label>Categoria</label>
-                <select name="category" class="form-control">
+                <select name="category" class="form-control" value="<%= article.categoryId %>">
                     <% categories.forEach((category) =>{ %>
                         <option value="<%= category.id %>"><%= category.title %></option>
                     <% }) %>
                 </select>
                 <br>
+                <input type="hidden" name="id" value="<%= article.id %>">
                 <button class="btn btn-success">Cadastrar</button>
 
             </form>
