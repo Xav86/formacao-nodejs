@@ -4,8 +4,9 @@ const User = require("./User");
 const bcrypt = require("bcryptjs");
 const { where } = require("sequelize");
 const connection = require("../database/database");
+const adminAuth = require("../middlewares/adminAuth");
 
-router.get("/admin/users", (req, res) => {
+router.get("/admin/users", adminAuth ,(req, res) => {
     User.findAll({
         order:[['id','ASC']]
     }).then(users => {
@@ -15,11 +16,11 @@ router.get("/admin/users", (req, res) => {
 
 });
 
-router.get("/admin/users/new", (req, res) => {
+router.get("/admin/users/new", adminAuth ,(req, res) => {
     res.render("admin/users/new")
 })
 
-router.post("/users/save", (req,res) => {
+router.post("/users/save", adminAuth ,(req,res) => {
     var email = req.body.email;
     var password = req.body.password;
 
@@ -48,7 +49,7 @@ router.post("/users/save", (req,res) => {
 
 });
 
-router.post("/users/delete", (req,res) => {
+router.post("/users/delete", adminAuth ,(req,res) => {
     var id = req.body.id;
     if (id != undefined){
         if (!isNaN(id)) {
@@ -81,7 +82,7 @@ router.post("/authenticate", (req, res) => {
                     id: user.id,
                     email: user.email,
                 }
-                res.json(req.session.user);
+                res.redirect("/admin/articles")
             }else{
                 res.redirect("/login");
             }
@@ -91,6 +92,11 @@ router.post("/authenticate", (req, res) => {
         }
     })
 
+});
+
+router.get("/logout", (req, res) => {
+    req.session.user = undefined;
+    res.redirect("/");
 });
 
 module.exports = router;
