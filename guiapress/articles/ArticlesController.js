@@ -8,6 +8,7 @@ const { where } = require("sequelize");
 
 router.get("/admin/articles", (req,res) => {
     Article.findAll({
+        order:[['id','ASC']],
         include: [{model: Category}]
     }).then(articles =>{
         res.render("admin/articles/index", {articles: articles})
