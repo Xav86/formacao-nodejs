@@ -81,6 +81,8 @@ app.get("/:slug",(req,res) => {
     });
 });
 
+// não consegui fazer funcionar um sistema de filtro, onde na navbar estaria todas as categorias e quando clicadas, somente os artigos com aquela categoria seriam escritos
+
 // app.get("/category/:slug",(req,res) => {
 //     var slug = req.params.slug;
 //     Category.findOne({
@@ -101,6 +103,14 @@ app.get("/:slug",(req,res) => {
 //         res.redirect("/");
 //     })
 // })
+
+// abaixo seria o q deveria ir no homenavbar
+
+//  <% categories.forEach(category => { %>
+//     <li class="nav-item">
+//         <a  class="nav-link" href="/category/<%= category.slug %>"><%= category.title %></a>
+//     </li>
+// <% }) %> 
 
 app.listen(8080, () => {
     console.log("Servidor iniciado!");
