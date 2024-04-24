@@ -10,16 +10,25 @@
             <form method="POST" action="/articles/update">
                 <input class="form-control"  type="text" name="title" id="title" placeholder="Digite um título para o artigo" value="<%= article.title %>">
                 <br>
-                <textarea class="form-control" name="body" id="article" cols="30" rows="10" placeholder="Descreva seu artigo"><%- article.body %></textarea>
+                <textarea class="form-control" name="body" id="article" cols="30" rows="10" placeholder="Descreva seu artigo"></textarea>
 
+                <!-- nota1: da pra só colocar o <%- article.body %> dentro do textarea que funciona, mas parece que antes não funcionava, então por garantia, vou seguir o outro método porque sei que o q fiz funciona -->
+                <!-- nota2: o método ensinado na aula não estava funcionando, então voltei para o que citei acima -->
+                <!-- nota3: um cara nos comentarios na aula ababou citando como é o comando mais atual, que foi atualizando com o passar do tempo, e com isso funcionou, então vou manter o que tava nos comentários -->
+                
                 <!-- O texto tem que ter até 256 caracteres, pois esta sendo salva em uma string, pois com o banco de dados do Oracle, não consegui colocar como TEXT, ja que não tem, o que me fez ter que colocar como string pq o resto não estava dando -->
 
                 <br>
                 <label>Categoria</label>
                 <select name="category" class="form-control" value="<%= article.categoryId %>">
                     <% categories.forEach((category) =>{ %>
-                        <option value="<%= category.id %>"><%= category.title %></option>
-                    <% }) %>
+
+                        <% if (category.id == article.categoryId) { %>
+                            <option value="<%= category.id %>" selected><%= category.title %></option>
+                        <% } else { %>
+                            <option value="<%= category.id %>"><%= category.title %></option>
+
+                    <% }}) %>
                 </select>
                 <br>
                 <input type="hidden" name="id" value="<%= article.id %>">
@@ -28,6 +37,10 @@
             </form>
         </div>
     </div>
+</div>
+
+<div id="content" style="display: none;">
+    <%- article.body %>
 </div>
 
 <%- include ('../../partials/footer.ejs') %>
@@ -54,6 +67,9 @@
                     'table',
                     'paste',
                     'emoticons',
-                ]
-            })
+                ],
+                init_instance_callback: () => {
+                    tinymce.activeEditor.setContent(document.getElementById('content').innerHTML);
+                }
+            });
 </script>
