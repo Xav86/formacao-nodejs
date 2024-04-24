@@ -5,7 +5,7 @@
     <br>
     <h1>Confira alguns artigos!</h1>
     <br>
-    <% articles.forEach(article => { %>
+    <% articles.forEach(article => {  %>
         <div class="card">
             <div class="card-header">
                 <h2><%= article.title %></h2>
@@ -17,6 +17,13 @@
         <br>
     
     <% }); %>
+
+    <div class="row">
+        <div class="col col-12">
+            <a href="/articles/page/2" class="btn btn-primary" style="float: right;">Next >>></a>
+
+        </div>
+    </div>
 
 </div>   
 </body>

@@ -89,32 +89,42 @@ router.post("/articles/update", (req,res) => {
 
 router.get("/articles/page/:num", (req, res) => {
     var page = req.params.num;
+    var limit = 4; // Limite de artigos por página
     var offset = 0;
 
-    if (isNaN(page) || page == 1){
-        offset = 0;
-    } else {
-        offset = parseInt(page) * 3;
+    if (isNaN(page) || page < 1) {
+        page = 1; // Página padrão caso seja inválido
     }
 
+    offset = (page - 1) * limit;
+
     Article.findAndCountAll({
-        limit: 3,
-        offset: offset
+        limit: limit,
+        offset: offset,
+        order: [['id', 'DESC']],
     }).then(articles => {
-        var next;
-        if (offset + 3 >= articles.count){
-            next = false;
-        } else {
+        var totalPages = Math.ceil(articles.count / limit);
+        var next
+        if(page < totalPages){
             next = true;
+        }else{
+            next = false;
         }
 
         var result = {
-            result: next,
+            page: parseInt(page),
+            next: next,
             articles: articles
         }
 
-        res.json(result);
-    })
+        Category.findAll().then(categories => {
+            res.render("admin/articles/page", {result: result, categories: categories})
+        });
+
+    }).catch(err => {
+        console.error("Erro ao buscar artigos:", err);
+        res.redirect("/admin/articles");
+    });
 });
 
 module.exports = router;

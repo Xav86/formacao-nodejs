@@ -5,9 +5,11 @@ const connection = require("./database/database");
 
 const categoriesController = require("./categories/CategoriesController");
 const articlesController = require("./articles/ArticlesController");
+const usersController = require("./user/UserController");
 
 const Article = require("./articles/Article");
 const Category = require("./categories/Category");
+const User = require("./user/User");
 const { where } = require("sequelize");
 const { Model } = require("sequelize-oracle");
 
@@ -37,11 +39,13 @@ connection
 
 app.use("/", categoriesController);
 app.use("/", articlesController);
+app.use("/", usersController);
 
 app.get("/",(req,res) =>{
 
     Article.findAll({
-        order:[['id','DESC']] 
+        order:[['id','DESC']],
+        limit: 4
     }).then(articles => {
         Category.findAll().then(categories => {
             res.render("index", {articles: articles, categories:categories});
@@ -76,12 +80,13 @@ app.get("/:slug",(req,res) => {
 //     Category.findOne({
 //         where: {
 //             slug: slug
-//         },
-//         include: [{Model: Article}] 
-//     }).then( category => {
+//         }
+//     }).then(category => {
 //         if(category != undefined){
 //             Category.findAll().then(categories => {
-//                 res.render("index",{articles: category.articles, categories: categories});
+//                 Article.findAll().then(articles =>{
+//                     res.render("index",{articles: articles, categories: categories});
+//                 });
 //             });
 //         }else{
 //             res.redirect("/");
