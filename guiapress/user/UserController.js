@@ -63,6 +63,42 @@ router.post("/users/delete", adminAuth ,(req,res) => {
     }
 });
 
+router.get("/admin/users/edit/:id", adminAuth ,(req, res) => {
+    var id = req.params.id;
+    
+    if(isNaN(id)){
+        res.redirect("/admin/users");
+    }
+
+    User.findById(id).then(users => {
+        if (users != undefined){
+            res.render("admin/users/edit",{users: users});
+
+        }else{
+            res.redirect("/admin/users");
+        }
+    }).catch(erro => {
+        res.redirect("/admin/users");
+    })
+});
+
+router.post("/users/update", adminAuth ,(req, res) => {
+    var id = req.body.id;
+    var email = req.body.email;
+    var password = req.body.password
+
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(password, salt);
+
+    User.update({email: email, password: hash },{
+        where: {
+            id: id
+        }
+    }).then(() => {
+        res.redirect("/admin/users");
+    });
+});
+
 router.get("/login", (req, res) => {
     res.render("admin/users/login");
 });
