@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const session = require("express-session");
 const connection = require("./database/database");
 
 const categoriesController = require("./categories/CategoriesController");
@@ -15,6 +16,11 @@ const { Model } = require("sequelize-oracle");
 
 // View engine
 app.set('view engine','ejs');
+
+// Sessions
+app.use(session({
+    secret: "plinplinplon", cookie: {maxAge: 3000000}
+}))
 
 // Static
 app.use(express.static('public'));
