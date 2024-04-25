@@ -69,9 +69,15 @@ function pegarUsuarios(){
 }
 
 async function principal(){
-    var usuarios = await pegarUsuarios();
-    console.log(usuarios)
-    console.log("Ola!");
+    var id = await pegarId();
+    var email = await buscarEmailNoBanco(id);
+    try{
+        await enviarEmail("Ola como vai?",email);
+        console.log("Email enviado com sucesso");
+    }catch(erro){
+        console.log(erro);
+
+    }
 }
 
 principal();
