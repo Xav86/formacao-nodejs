@@ -108,6 +108,18 @@ app.get("/game/:id", (req,res) => {
     }
 });
 
+app.post("/game/update", (req,res) => {
+    var {id, title, price, year} = req.body;
+
+    Games.update({title: title, price: Math.round(price), year: year},{
+        where:{
+            id: id
+        }
+    }).then(() => {
+        res.redirect("/");
+    });
+});
+
 app.listen(8080,() => {
     console.log("API RODANDO!");
 });
