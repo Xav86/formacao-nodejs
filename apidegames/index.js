@@ -66,27 +66,21 @@ app.post("/game",(req,res) => {
 });
 
 // metodo delete não é acessivel pelo navegador nem formularios, e sim com requisições diretas por bibliotecas como Axios, Ajax, FatAPI do Js, etc.
-/*
-app.delete("/game/:id", (req,res) =>{
+app.post("/game/delete", (req, res) => {
+    var id = req.body.id;
 
-    if(isNaN(req.params.id)){
-        res.sendStatus(400);  
-    } else {
-        
-        var id = parseInt(req.params.id);
-        var index = DB.games.findIndex(g => g.id == id);
-
-        if(index == -1){
-            res.sendStatus(404);
+    if(id != undefined){
+        if(!isNaN(id)){
+            connection.query(`delete "games" where "id" = ${id}`)
+            res.redirect("/");
         }else{
-            DB.games.splice(index,1);
-            res.sendStatus(200);
+            res.redirect("/");
         }
-
+    }else{
+        res.redirect("/");
     }
-
 });
-*/
+
 app.get("/game/:id", (req,res) => {
     var id = req.params.id;
     
