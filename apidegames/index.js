@@ -1,53 +1,50 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-// const connection = require("./database/database")
+const connection = require("./database/database")
 
-// const Games = require("./database/Games");
+const Games = require("./database/Games");
 
 //Body parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+// View engine
+app.set('view engine','ejs');
+
+//config bootstrap5 pra ser estatico
+// app.use(express.static("node_modules/bootstrap/dist/"));
+app.use('/css', express.static('./node_modules/bootstrap/dist/css'));
+app.use('/js', express.static('./node_modules/bootstrap/dist/js'));
+
+// Static
+app.use(express.static('public/assets/images'));
+
 //Database
-// connection
-//     .authenticate()
-//     .then(() => {
-//         console.log("Conexão feita com sucesso!");
-//     }).catch((error) => {
-//         console.log(error);
-//     })
+connection
+    .authenticate()
+    .then(() => {
+        console.log("Conexão feita com sucesso!");
+    }).catch((error) => {
+        console.log(error);
+    })
 
-var DB = {
+app.get("/", (req,res) => {
 
-    games: [
-        {
-            id:1,
-            title: "Terraria",
-            year: 2011,
-            price: 20,
-        },
-        {
-            id:23,
-            title: "Sea of thieves",
-            year: 2018,
-            price: 50,
-        },
-        {
-            id:11,
-            title: "Minecraft",
-            year: 2009,
-            price: 110,
-        },
+    Games.findAll({
+        order:[['id','DESC']],
+    }).then((game) => {
+        res.render("index", {game: game});
 
-    ]
+    }).catch((err) => {
+        res.sendStatus(500);
 
-}
+    });
+});
 
 app.get("/games", (req,res) => {
-    res.statusCode = 200;
-    res.json(DB.games);
-})
+    res.render("games");
+});
 
 app.get("/game/:id", (req,res) => {
     
@@ -60,9 +57,9 @@ app.get("/game/:id", (req,res) => {
 
         if (game != undefined){
             res.statusCode = 200;
-            res.json(game)
+            res.json(game);
         }else{
-            res.sendStatus(404)
+            res.sendStatus(404);
         }
 
     }
@@ -72,24 +69,19 @@ app.get("/game/:id", (req,res) => {
 app.post("/game",(req,res) => {
     var {title, price, year} = req.body;
 
-    if (!isNaN(title) || title == undefined){
-        res.sendStatus(400);
-    }
-    if (isNaN(price) || price == undefined){
-        res.sendStatus(400);
-    }
-    if (isNaN(year) || year == undefined){
+    if (title != undefined && price != undefined && year != undefined){
+        Games.create({
+            title: title,
+            year: year,
+            price:  Math.round(price),
+        }).then(() => {
+            res.redirect("/");
+        })
+
+    }else{
         res.sendStatus(400);
     }
 
-    DB.games.push({
-        id: 65,
-        title,
-        price,
-        year,
-    });
-
-    res.sendStatus(200);
 });
 
 // metodo delete não é acessivel pelo navegador nem formularios, e sim com requisições diretas por bibliotecas como Axios, Ajax, FatAPI do Js, etc.
@@ -114,37 +106,8 @@ app.delete("/game/:id", (req,res) =>{
 });
 
 app.put("/game/:id", (req,res) => {
-
-    if(isNaN(req.params.id)){
-        res.sendStatus(400);  
-    } else {
-        
-        var id = parseInt(req.params.id);
-        var game = DB.games.find(g => g.id == id);
-
-        if (game != undefined){
-            
-                var {title, price, year} = req.body;
-
-                if (isNaN(title) || title == undefined){
-                    game.title = title;
-                }
-                if (!isNaN(price) || price == undefined){
-                    game.price = price;
-                }
-                if (!isNaN(year) || year == undefined){
-                    game.year = year;
-                }
-
-                res.sendStatus(200);
-
-        }else{
-            res.sendStatus(404)
-        }
-
-    }
-
-
+    
+    
 });
 
 app.listen(8080,() => {
