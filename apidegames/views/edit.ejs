@@ -1,0 +1,30 @@
+<%- include('partials/header.ejs'); %>
+<body>
+    <%- include('partials/navbar.ejs') %>
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-header bg-primary text-light">
+                <h2 class="card-title">Cadastre um jogo</h2>
+
+            </div>
+            <form action="/game/update" method="post">
+
+                <div class="card-body">
+                    <label>Nome</label>
+                    <input class="form-control mb-3" type="text" name="title" placeholder="Insina o nome do jogo aqui!" value="<%= game.title %>">
+
+                    <label>Ano de lançamento</label>
+                    <input class="form-control mb-3" type="text" name="year" placeholder="XXXX" value="<%= game.year %>">
+
+                    <label>Preço</label>
+                    <input class="form-control mb-3" type="text" name="price" placeholder="$00.00" value="<%= game.price %>">
+                    <hr>
+                    <input type="hidden" name="id" value="<%= game.id %>">
+                    
+                    <button class="btn btn-primary" type="">Cadastrar</button>
+                </div>
+            </form>                
+          </div> 
+    </div>
+</body>
+<%- include('partials/footer.ejs'); %>

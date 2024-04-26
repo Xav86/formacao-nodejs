@@ -12,10 +12,7 @@
                 <p class="card-text"> Ano: <%= games.year %></p>
                 <hr>
                 <p><b>Ações</b></p>
-                <form action="/game/<%= games.id %>" method="post" style="float: left;">
-                    <button class="btn btn-warning" type="submit">Editar</button>
-
-                </form>
+                <a href="/game/<%= games.id %>" class="btn btn-warning">Editar</a>
 
                 <a href="#" class="btn btn-danger" style="margin-left: 10px;">Excluir</a>
             </div>
