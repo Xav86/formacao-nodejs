@@ -26,3 +26,26 @@ class Filme {
     }
 
 }
+
+var vingadores = new Filme();
+
+console.log("Título do filme: "+ vingadores.titulo);
+console.log("Ano de lançamento: "+ vingadores.ano);
+
+vingadores.Reperoduzir();
+
+var homemAranha = new Filme();
+
+console.log("Título do filme: "+ homemAranha.titulo);
+console.log("Ano de lançamento: "+ homemAranha.ano);
+
+homemAranha.Avancar();
+
+var starWars = new Filme();
+
+console.log("Título do filme: "+ starWars.titulo);
+console.log("Ano de lançamento: "+ starWars.ano);
+
+starWars.Pausar();
+starWars.Avancar();
+starWars.Fechar();
