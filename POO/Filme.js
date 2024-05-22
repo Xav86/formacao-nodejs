@@ -29,23 +29,20 @@ class Filme {
 
 var vingadores = new Filme();
 
-console.log("Título do filme: "+ vingadores.titulo);
-console.log("Ano de lançamento: "+ vingadores.ano);
+vingadores.titulo = "Vingadores 2";
+vingadores.ano = "2014";
+vingadores.genero = "Ação";
 
-vingadores.Reperoduzir();
+console.log(vingadores.titulo);
+console.log(vingadores.ano);
+console.log(vingadores.genero);
 
-var homemAranha = new Filme();
+var batman = new Filme();
 
-console.log("Título do filme: "+ homemAranha.titulo);
-console.log("Ano de lançamento: "+ homemAranha.ano);
+batman.titulo = "Batman";
+batman.ano = "2009";
+batman.genero = "Ação";
 
-homemAranha.Avancar();
-
-var starWars = new Filme();
-
-console.log("Título do filme: "+ starWars.titulo);
-console.log("Ano de lançamento: "+ starWars.ano);
-
-starWars.Pausar();
-starWars.Avancar();
-starWars.Fechar();
+console.log(batman.titulo);
+console.log(batman.ano);
+console.log(batman.genero);
