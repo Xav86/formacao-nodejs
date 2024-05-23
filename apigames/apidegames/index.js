@@ -29,6 +29,20 @@ var DB = {
             year: 2012,
             price: 20
         }
+    ],
+    users: [
+        {
+            id: 1,
+            name: "Gustavo Gonçalves",
+            email: "gustavo@gustavo.com",
+            senha: "poggers",
+        },
+        {
+            id: 2,
+            name: "Calebe Arlan",
+            email: "calebe@calebe.com",
+            senha: "noggers",
+        }
     ]
 }
 
