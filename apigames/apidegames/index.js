@@ -13,9 +13,9 @@ var DB = {
     games: [
         {
             id: 23,
-            title: "Call of duty MW",
-            year: 2019,
-            price: 60
+            title: "Terraria",
+            year: 2011,
+            price: 20
         },
         {
             id: 65,
