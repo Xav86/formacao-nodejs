@@ -108,3 +108,14 @@ database.select().table("GAMES_3").orderBy("NOME","asc").then(data => {
     console.log(err);
 });
 */
+
+/* ASSOCIATED INSERTS
+database.insert({
+    NOME: "Mojang",
+    GAME_ID: 3
+}).table("ESTUDIOS_2").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err)
+});
+*/
