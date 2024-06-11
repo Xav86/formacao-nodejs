@@ -100,3 +100,11 @@ database.where({ID: 1}).update({PRECO: 10}).table("GAMES_3").then(data => {
     console.log(err);
 });
 */
+
+/* ORDER BY
+database.select().table("GAMES_3").orderBy("NOME","asc").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+*/
