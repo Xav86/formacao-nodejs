@@ -90,3 +90,13 @@ database.where({ID: 2}).delete().table("GAMES_3").then(data => {
     console.log(err);
 });
 */
+
+/* UPDATE
+// Sempre respeitar o tipo de campo, se é string passar string, se numero passar numero...senão da erro
+// Se um dado for como Undefined, ele da erro! (serve pra todas as operações)
+database.where({ID: 1}).update({PRECO: 10}).table("GAMES_3").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+*/
