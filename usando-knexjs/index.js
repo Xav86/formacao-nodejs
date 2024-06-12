@@ -125,5 +125,35 @@ database.select(["GAMES_3.*","ESTUDIOS_2.ID as estudios_id"]).table("GAMES_3").i
     console.log(data);
 }).catch(err => {
     console.log(err);
-})
+});
+*/
+
+/* JOIN COM WHERE - nota: para adicionar mais joins basta repetir no fim o .innerJoin(...)
+database.select(["GAMES_3.*","ESTUDIOS_2.ID as estudios_id"]).table("GAMES_3").innerJoin("ESTUDIOS_2", "ESTUDIOS_2.GAME_ID","GAMES_3.ID").where("GAMES_3.ID",4).then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+*/
+
+/* 1 para M - literalmente igual 1 para 1
+database.select(["GAMES_3.*","ESTUDIOS_2.NOME as estudio_nome"]).table("GAMES_3").innerJoin("ESTUDIOS_2", "ESTUDIOS_2.GAME_ID","GAMES_3.ID").then(data => {
+    var estudiosGamesArray = data;
+    var game = {
+        ID: 0,
+        NOME: "",
+        estudios: []
+    }
+
+    game.ID = data[0].ID;
+    game.NOME = data[0].NOME;
+
+    data.forEach(estudio => {
+        game.estudios.push({NOME: estudio.estudio_nome});
+    })
+
+    console.log(game);
+}).catch(err => {
+    console.log(err);
+});
 */
