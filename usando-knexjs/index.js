@@ -119,3 +119,11 @@ database.insert({
     console.log(err)
 });
 */
+
+/* JOIN - RELACIONAMENTO 1 para 1
+database.select(["GAMES_3.*","ESTUDIOS_2.ID as estudios_id"]).table("GAMES_3").innerJoin("ESTUDIOS_2", "ESTUDIOS_2.GAME_ID","GAMES_3.ID").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+})
+*/
