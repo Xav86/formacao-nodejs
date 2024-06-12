@@ -157,3 +157,53 @@ database.select(["GAMES_3.*","ESTUDIOS_2.NOME as estudio_nome"]).table("GAMES_3"
     console.log(err);
 });
 */
+
+/* M para M
+database.select([
+        "ESTUDIOS_2.NOME as estudio_nome",
+        "GAMES_3.NOME as game_nome",
+        "GAMES_3.PRECO"
+    ])
+    .table("GAMES_ESTUDIOS")
+    .innerJoin("GAMES_3","GAMES_3.ID","GAMES_ESTUDIOS.GAME_ID")
+    .innerJoin("ESTUDIOS_2","ESTUDIOS_2.ID","GAMES_ESTUDIOS.ESTUDIO_ID")
+    .where("GAMES_3.ID",1)
+    .then(data => {
+        console.log(data);
+    }).catch(err => {
+        console.log(err);
+    })
+*/
+
+/* da para fazer sem o where tmb
+database.select([
+        "ESTUDIOS_2.NOME as estudio_nome",
+        "GAMES_3.NOME as game_nome",
+        "GAMES_3.PRECO"
+    ])
+    .table("GAMES_ESTUDIOS")
+    .innerJoin("GAMES_3","GAMES_3.ID","GAMES_ESTUDIOS.GAME_ID")
+    .innerJoin("ESTUDIOS_2","ESTUDIOS_2.ID","GAMES_ESTUDIOS.ESTUDIO_ID")
+    .then(data => {
+        console.log(data);
+    }).catch(err => {
+        console.log(err);
+    })
+*/
+
+/* da pra mudar as condições do where tmb
+database.select([
+        "ESTUDIOS_2.NOME as estudio_nome",
+        "GAMES_3.NOME as game_nome",
+        "GAMES_3.PRECO"
+    ])
+    .table("GAMES_ESTUDIOS")
+    .innerJoin("GAMES_3","GAMES_3.ID","GAMES_ESTUDIOS.GAME_ID")
+    .innerJoin("ESTUDIOS_2","ESTUDIOS_2.ID","GAMES_ESTUDIOS.ESTUDIO_ID")
+    .where("ESTUDIOS_2.ID", 2)
+    .then(data => {
+        console.log(data);
+    }).catch(err => {
+        console.log(err);
+    })
+*/
