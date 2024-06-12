@@ -207,3 +207,22 @@ database.select([
         console.log(err);
     })
 */
+
+/* TRANSAÇÕES
+async function transacaoExemplo() {
+
+    try {
+        await database.transaction(async trans => {
+
+            await trans.insert({ID: 6, NOME: "SUPERCELL"}).into("ESTUDIOS_2");
+            await trans.insert({ID: 5, NOME: "Clash of Clãns", PRECO: 0}).into("GAMES_3");
+
+        });
+    } catch(err) {
+        console.log(err);
+    }
+
+}
+
+transacaoExemplo();
+*/
