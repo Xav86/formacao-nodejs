@@ -41,7 +41,22 @@ class User {
     /* -- Busca por ID -- */
     async findById(id){
         try {
-        const result = await knexInstance.select(['id', 'name', 'email', 'role']).where({'id': id}).table('users');
+        const result = await knexInstance.select(['ID', 'name', 'email', 'role']).where({'ID': id}).table('users');
+            if (result.length > 0){
+                return result[0];
+            } else {
+                return undefined;
+            }
+        } catch(err) {
+            console.log('Erro ao fazer a listagem de usuários: ', err);
+            return undefined;
+        }
+    
+    }
+
+    async findByEmail(email){
+        try {
+        const result = await knexInstance.select(['ID', 'name', 'email', 'role']).where({'email': email}).table('users');
             if (result.length > 0){
                 return result[0];
             } else {
@@ -57,7 +72,7 @@ class User {
     /* --- Listagem de usuários para adiministradores --- */
     async findAll() {
         try {
-            const result = await knexInstance.select(['id', 'name','email', 'role']).table('users');
+            const result = await knexInstance.select(['ID', 'name','email', 'role']).table('users');
             return result;
         } catch(err) {
             console.log('Erro ao fazer a listagem de usuários: ', err);
@@ -94,7 +109,7 @@ class User {
             }
 
             try{
-                await knexInstance.update(editUser).where({id: id}).table('users');
+                await knexInstance.update(editUser).where({ID: id}).table('users');
                 return {status: true}
             }catch(err){
                 return {status: false,err: err}
@@ -109,7 +124,7 @@ class User {
         const user = await this.findById(id);
         if (user != undefined) {
             try {
-                await knexInstance.delete().where({id: id}).table('users');
+                await knexInstance.delete().where({ID: id}).table('users');
                 return {status: true};
             } catch(err) {
                 return {status: false, err: `Ocorreu um erro durante a deleção: ${err}`};
