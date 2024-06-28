@@ -9,8 +9,10 @@ router.get('/', HomeController.index);
 router.get('/user', UserController.index);
 router.get('/user/:id', UserController.FindUser);
 
+router.post('/user', UserController.create);
+
 router.put('/user', UserController.edit);
 
-router.post('/user', UserController.create);
+router.delete('/user/:id', UserController.remove);
 
 module.exports = router;
