@@ -36,6 +36,23 @@ class UserController {
             res.status(200).json(user);
         }
     }
+    
+    async edit(req, res) {
+        const {id, name, email, role} = req.body;
+
+        const result = await User.update(id, name, email, role);
+        
+        if (result != undefined) {
+            if(result.status) {
+                res.status(200).send('Atualizado!');
+            } else {
+                res.json(result.err);
+            }
+        } else {
+            res.json(result.err);
+        }
+
+    }
 
 }
 
