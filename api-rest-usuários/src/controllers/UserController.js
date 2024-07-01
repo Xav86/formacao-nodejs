@@ -1,5 +1,11 @@
 const User = require('../models/User');
 const PasswordToken = require('../models/PasswordToken');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require("dotenv").config();
+
+const secret = process.env.SECRET;
+
 class UserController {
 
     async index(req, res) {
@@ -91,6 +97,32 @@ class UserController {
             res.status(200).send('Senha alterada');
         } else {
             res.status(406).send('token invalido!');
+        }
+    }
+
+    async login(req, res) {
+        const { email, password } = req.body;
+
+        const user = await User.findByEmail(email);
+
+        if (user != undefined) {
+
+            const result = await bcrypt.compare(password, user.password);
+
+            if (result) {
+
+                const token = jwt.sign({ email: user.email, role: user.role }, secret);
+
+                res.status(200).json({token: token});
+
+            } else {
+                res.status(406).send('Senha incorreta');
+            }
+
+        } else {
+
+            res.json({status: false});
+
         }
     }
 
