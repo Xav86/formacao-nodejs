@@ -9,6 +9,7 @@ router.get('/', HomeController.index);
 router.get('/user', UserController.index);
 router.get('/user/:id', UserController.FindUser);
 
+router.post("/changepassword", UserController.changePassword);
 router.post('/recoverpassword', UserController.recoverPassword);
 router.post('/user', UserController.create);
 
