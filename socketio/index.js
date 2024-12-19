@@ -11,6 +11,11 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+io.on('connection', (socket) => {
+    console.log(socket);
+    console.log(socket.id);
+});
+
 http.listen(3000, () => {
     console.log(`
         ***********************
