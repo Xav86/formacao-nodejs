@@ -7,9 +7,28 @@
 </head>
 <body>
     <h1>Testando Socket.io</h1>
+    <input type="text" id="palavra" placeholder="Digite algo">
+    <br>
+    <h3>resultado</h3>
+    <strong id="resultado"></strong>
+
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js" integrity="sha512-8BHxHDLsOHx+flIrQ0DrZcea7MkHqRU5GbTHmbdzMRnAaoCIkZ97PqZcXJkKZckMMhqfoeaJE+DNUVuyoQsO3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     const socket = io('http://localhost:3000');
+    socket.emit('helloWorld', { nome: 'Gustavo' });
+
+    socket.on('resultado', (data) => {
+        document.querySelector('#resultado').innerHTML = data;
+    });
+
+    const palavra = document.querySelector('#palavra');
+
+    palavra.addEventListener('input', () => {
+        const input = palavra.value;
+        console.log(input);
+        socket.emit('palavra', input);
+    });
+
 </script>
 </html>

@@ -12,8 +12,14 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    console.log(socket);
-    console.log(socket.id);
+    socket.on('helloWorld', (data) => {
+        console.log(data);
+    });
+
+    socket.on('palavra', (data) => {
+        console.log(data);
+        socket.emit('resultado', data);
+    })
 });
 
 http.listen(3000, () => {
