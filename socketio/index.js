@@ -12,6 +12,11 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
+    
+    socket.on('disconnect', () => {
+        console.log('desconectado: ', socket.id);
+    })
+
     socket.on('helloWorld', (data) => {
         console.log(data);
     });
@@ -19,7 +24,8 @@ io.on('connection', (socket) => {
     socket.on('palavra', (data) => {
         console.log(data);
         socket.emit('resultado', data);
-    })
+    });
+    
 });
 
 http.listen(3000, () => {
