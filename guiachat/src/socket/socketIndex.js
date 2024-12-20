@@ -5,5 +5,10 @@ module.exports = (io) => {
         socket.on('disconnect', () => {
             console.log(`Cliente desconectado: ${socket.id}`);
         });
+
+        socket.on('msg', (data) => {
+            io.emit('showmsg', data);
+            console.log(data);
+        });
     });
 };
