@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem</title>
+</head>
+<body>
+    <h3>Consultas: </h3>
+    <hr>
+        <form action="" method="post">
+            <input type="search" id="search" placeholder="Digite o email ou o CPF">
+            <button>Pesquisar</button>
+        </form>
+    <hr>
+    <% appos.forEach(appo => { %>
+    
+        <h4>Consultas: <%= appo.description %></h4>
+        <h4>Paciente: <%= appo.name %></h4>
+        <h4>Email: <%= appo.email %></h4>
+        <h4>CPF: <%= appo.cpf %></h4>
+        <hr>
+
+    <% }); %>
+</body>
+</html>

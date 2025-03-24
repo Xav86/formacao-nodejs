@@ -47,6 +47,29 @@ app.get('/event/:id', async (req, res) => {
     res.render('event.ejs', { appo: appointment });
 });
 
+app.post('/finish', async (req, res) => {
+    const id = req.body.id;
+
+    try {
+        const result = await AppointmentService.finish(id);
+
+        if (!result) alert('erro');
+
+        res.redirect('/');
+    } catch(error) {
+        console.error(error);
+    }
+});
+
+app.get('/list', async (req, res) => {
+    try {
+        const appos = await AppointmentService.getAll(true);
+        res.render('list.ejs', {appos});
+    } catch(error) {
+        console.error(error);
+    }
+})
+
 app.listen(1919, () => {
     console.log(`
        ************************************
