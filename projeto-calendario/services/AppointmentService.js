@@ -27,7 +27,6 @@ class AppointmentService {
 
     async getAll(showFinished) {
 
-
         if (showFinished) {
             return await Appo.find();
         } else {
@@ -45,6 +44,15 @@ class AppointmentService {
             return appointments;
         }
 
+    }
+
+    async getById(id) {
+        try {
+            const event = await Appo.findOne({ '_id': id });
+            return event;
+        } catch(error) {
+            console.error(error);
+        }
     }
 
 }

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado</title>
+</head>
+<body>
+    <h1>Consulta: <%= appo.description %></h1>
+    <hr>
+    <h4>Paciente: <%= appo.name %></h4>
+    <h4>Email: <%= appo.email %></h4>
+    <h4>CPF: <%= appo.cpf %></h4>
+    <hr>
+
+    <% if (!appo.finished) { %>
+    <button>Finalizar Consulta</button>
+    <% } %>
+</body>
+</html>

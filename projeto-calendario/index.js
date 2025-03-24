@@ -42,6 +42,11 @@ app.get('/get-calendar', async (req, res) => {
     res.json(appointments);
 });
 
+app.get('/event/:id', async (req, res) => {
+    const appointment = await AppointmentService.getById(req.params.id);
+    res.render('event.ejs', { appo: appointment });
+});
+
 app.listen(1919, () => {
     console.log(`
        ************************************
