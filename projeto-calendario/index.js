@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const appointmentService = require('./services/AppointmentService.js');
+const AppointmentService = require('./services/AppointmentService.js');
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
@@ -12,7 +13,7 @@ app.set('view engine', 'ejs');
 mongoose.connect('mongodb://localhost:27017/agendamento');
 
 app.get('/', ( req, res ) => {
-    res.send('teste');
+    res.render('index.ejs')
 });
 
 app.get('/cadastro', ( req, res ) => {
@@ -32,6 +33,13 @@ app.post('/create', async (req, res) => {
         res.send('Ocorreu uma falha');
     }
 
+});
+
+app.get('/get-calendar', async (req, res) => {
+
+    const appointments = await AppointmentService.getAll(false);
+
+    res.json(appointments);
 });
 
 app.listen(1919, () => {
