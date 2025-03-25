@@ -8,9 +8,9 @@
 <body>
     <h3>Consultas: </h3>
     <hr>
-        <form action="" method="post">
-            <input type="search" id="search" placeholder="Digite o email ou o CPF">
-            <button>Pesquisar</button>
+        <form action="/search-result" method="get">
+            <input type="search" id="search" name="search" placeholder="Digite o email ou o CPF">
+            <button type="submit">Pesquisar</button>
         </form>
     <hr>
     <% appos.forEach(appo => { %>

@@ -63,12 +63,30 @@ app.post('/finish', async (req, res) => {
 
 app.get('/list', async (req, res) => {
     try {
+        // await AppointmentService.search('email@email.com')
+
         const appos = await AppointmentService.getAll(true);
         res.render('list.ejs', {appos});
     } catch(error) {
         console.error(error);
     }
-})
+});
+
+app.get('/search-result', async (req, res) => {
+    try {
+        const appos = await AppointmentService.search(req.query.search);
+        res.render('list', { appos });
+    } catch(error) {
+        console.error(error);f
+        res.render('list', { appos: [] });
+    }
+});
+
+// const pollTime = 1000 * 60 * 5;
+
+// setInterval(async () => {
+//     await AppointmentService.sendNotification();
+// }, pollTime);
 
 app.listen(1919, () => {
     console.log(`
