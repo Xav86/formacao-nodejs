@@ -10,6 +10,6 @@ test('Aplicação deve responder 200 para rota "/"', () => {
         expect(status).toBe(200);
     }).catch(error => {
         fail(error);
-    })
+    });
 
 });
